@@ -1,0 +1,25 @@
+{
+  "name": "vinlon/laravel-wechat-auth",
+  "description": "Wechat Authentication in Laravel framework",
+  "license": "MIT",
+  "require-dev": {
+    "laravel/framework": "7.*"
+  },
+  "require": {
+    "tymon/jwt-auth": "1.*",
+    "ext-openssl": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Vinlon\\Laravel\\WechatAuth\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Vinlon\\Laravel\\WechatAuth\\WechatAuthServiceProvider"
+      ]
+    }
+  }
+}
