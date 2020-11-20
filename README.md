@@ -5,7 +5,7 @@
 ### 使用指引
 
 1. #### 引入package 
-d
+
     ```shell script
     composer require vinlon/laravel-wechat-auth
     ```
