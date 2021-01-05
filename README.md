@@ -115,7 +115,7 @@ OUTPUT:
 
 OUTPUT: 返回结果与fast_login相同，不存在user_info为空的情况
 
-#### wxapp/refresh_login
+#### wxapp/profile
 
 此接口一般在fast_login请求成功的情况下调用，直接将wx.getUserInfo中返回的用户信息(未加密)保存到服务器
 
@@ -128,7 +128,7 @@ OUTPUT: 返回结果与fast_login相同，不存在user_info为空的情况
 | gender    | 性别，0:未知，1:男，2: 女 |
 | avatarUrl | 用户头像地址              |
 
-OUTPUT: 返回结果与fresh_login相同
+OUTPUT: []
 
 ### JWT Token 使用说明
 
@@ -154,7 +154,7 @@ WechatAuthException
 
 - UserUpdated
 
-    当用户调用refresh_login接口时，如果用户信息发生变化，则会触发该事件
+    当用户调用 profile 接口时，如果用户信息发生变化，则会触发该事件
 
 - UserLoggedIn
 

@@ -10,7 +10,7 @@ Route::prefix('wxapp')->namespace('Vinlon\Laravel\WechatAuth')->group(function (
     Route::post('fresh_login', 'WechatAuthController@refreshLogin');
 
     Route::middleware('auth:wxapp')->group(function () {
-        // 更新用户信息并重新获取token
-        Route::post('refresh_login', 'WechatAuthController@refreshLogin');
+        // 更新用户信息
+        Route::post('profile', 'WechatAuthController@updateProfile');
     });
 });

@@ -97,10 +97,10 @@ class WechatAuthController extends Controller
 
 
     /**
-     * 保存用户信息并重新登录
+     * 保存用户信息
      * @return array
      */
-    public function refreshLogin()
+    public function updateProfile()
     {
         /** @var WxUser $user */
         $user = $this->auth->user();
@@ -113,7 +113,7 @@ class WechatAuthController extends Controller
             'avatarUrl' => 'required'
         ]);
         $user = $this->saveWxUser($user, $param);
-        return $this->processLogin($user);
+        return [];
     }
 
     /**
