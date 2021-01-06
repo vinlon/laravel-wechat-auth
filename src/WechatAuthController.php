@@ -4,8 +4,10 @@
 namespace Vinlon\Laravel\WechatAuth;
 
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\UnauthorizedException;
 use Tymon\JWTAuth\JWTGuard;
 use Vinlon\Laravel\WechatAuth\Events\UserAdded;
 use Vinlon\Laravel\WechatAuth\Events\UserLoggedIn;
@@ -41,6 +43,7 @@ class WechatAuthController extends Controller
     /**
      * 快速登录，只记录用户的openid,因此小程序端不需要进行授权
      * @throws WechatAuthException
+     * @throws AuthenticationException
      */
     public function fastLogin()
     {
@@ -51,6 +54,7 @@ class WechatAuthController extends Controller
         $session = $this->wechatApp->code2Session($code);
         $appId = data_get($session, 'appid');
         $openid = data_get($session, 'openid');
+        /** @var WxUser $user */
         $user = WxUser::findByAppOpenid($appId, $openid);
         if (!$user) {
             //保存用户信息，除app_id和openid外，其它字段设为空
@@ -58,6 +62,11 @@ class WechatAuthController extends Controller
             $user->app_id = $appId;
             $user->openid = $openid;
             $this->saveWxUser($user);
+        } else {
+            //检查用户状态
+            if ($user->status->isNot(WxUserStatus::ENABLED())) {
+                throw new AuthenticationException();
+            }
         }
         //登录
         return $this->processLogin($user);

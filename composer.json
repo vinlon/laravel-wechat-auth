@@ -7,8 +7,7 @@
   },
   "require": {
     "tymon/jwt-auth": "1.*",
-    "ext-openssl": "*",
-    "ext-json": "*"
+    "bensampo/laravel-enum": "^2.2"
   },
   "autoload": {
     "psr-4": {

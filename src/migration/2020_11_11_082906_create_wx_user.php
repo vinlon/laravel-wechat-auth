@@ -28,6 +28,7 @@ class CreateWxUser extends Migration
             $table->string('province', 64)->default('')->comment('所在省份');
             $table->string('city', 64)->default('')->comment('所在城市');
             $table->string('avatar_url')->default('')->comment('头像链接');
+            $table->string('status', 32)->default(\Vinlon\Laravel\WechatAuth\WxUserStatus::ENABLED)->comment('用户状态');
 
             $table->index(['app_id', 'openid'], 'app_openid');
         });

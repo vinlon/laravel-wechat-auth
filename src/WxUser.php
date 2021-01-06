@@ -4,6 +4,8 @@
 namespace Vinlon\Laravel\WechatAuth;
 
 
+use BenSampo\Enum\Traits\CastsEnums;
+use DateTimeInterface;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -19,12 +21,24 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $province 所在省份
  * @property string $city 所在城市
  * @property string $avatar_url 头像链接
+ * @property WxUserStatus $status 用户状态
  * @method static \Illuminate\Database\Eloquent\Builder|WxUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WxUser newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|WxUser query()
  */
 class WxUser extends AuthUser implements JWTSubject
 {
+    use CastsEnums;
+
+    protected $casts = [
+        'status' => WxUserStatus::class
+    ];
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

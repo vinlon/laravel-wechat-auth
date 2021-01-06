@@ -15,10 +15,8 @@
     先执行如下命令
     
     ```shell script
-    php artisan vendor:publish
+    php artisan vendor:publish --provider="Vinlon\Laravel\SqlLogger\SqlLoggerProvider"
     ```
-
-    然后选择 Provider: Vinlon\Laravel\SqlLogger\SqlLoggerProvider 对应的序号
     
     在应用程序的config目录下，将生成wechat-auth.php文件（注：一般情况下，此文件不需要做任何修改，配置的调整通过环境变量实现）
 
@@ -27,14 +25,13 @@
     配置小程序的APPID 和 APPSECRET
     
     ```
-    WXCHAT_AUTH_WXAPP_APPID:
-    WXCHAT_AUTH__WXAPP_APPSECRET:
+    WECHAT_AUTH_WXAPP_APP_ID=
+    WECHAT_AUTH__WXAPP_APP_SECRET=
     ```
 
 4. 创建数据库表
 
     ```
-    # 如果数据库中已经存在 wx_users表，需要先将其 drop
     php artisan migrate
     ```
    
@@ -46,11 +43,11 @@
    php artisan jwt:secret
    ```
 
-6. 根据实际情况调用 fast_login , fresh_login 或 refresh_login进行登录
+6. 根据实际情况调用 fast_login , fresh_login 或 profile 进行登录
 
     详见[接口说明](#接口说明)
 
-7. 使用auth:wxapp middleware 对请求的登录状态进行验证
+7. 使用 auth middleware 对请求的登录状态进行验证
 
     ```
     Route::group(['middleware' => ['auth:wxapp']], function () {
