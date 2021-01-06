@@ -78,6 +78,8 @@ OUTPUT:
 | expires_in   | access_token有效期                                           |
 | user_info    | 字段命令和微信getUserInfo的返回值保持一致，如果<br/>如果数据中未保存用户信息，则不包含此字段 |
 
+注： 如果用户被禁用，则该接口将返回 `401:Unauthenticated`
+
 示例
 
 ```js
