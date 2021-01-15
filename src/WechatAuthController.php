@@ -104,6 +104,24 @@ class WechatAuthController extends Controller
         return $this->processLogin($user);
     }
 
+    /**
+     * 获取用户信息
+     * @return array
+     */
+    public function getProfile()
+    {
+        /** @var WxUser $user */
+        $user = $this->auth->user();
+
+        return [
+            'nickName' => $user->nickname,
+            'country' => $user->country,
+            'province' => $user->province,
+            'city' => $user->city,
+            'gender' => $user->gender,
+            'avatarUrl' => $user->avatar_url
+        ];
+    }
 
     /**
      * 保存用户信息
