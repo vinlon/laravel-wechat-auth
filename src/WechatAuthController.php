@@ -47,10 +47,10 @@ class WechatAuthController extends Controller
      */
     public function fastLogin()
     {
-        $code = request()->input('code');
-        if (!$code) {
-            throw new WechatAuthException('code is required');
-        }
+        $param = request()->validate([
+            'code' => 'required',
+        ]);
+        $code = $param['code'];
         $session = $this->wechatApp->code2Session($code);
         $appId = data_get($session, 'appid');
         $openid = data_get($session, 'openid');
@@ -85,7 +85,7 @@ class WechatAuthController extends Controller
             'encrypted_data' => 'required',
             'iv' => 'required'
         ]);
-        $session = $this->code2Session($param['code']);
+        $session = $this->wechatApp->code2Session($param['code']);
         $appId = data_get($session, 'appid');
         $sessionKey = data_get($session, 'session_key');
         $userInfo = WxDataDecrypt::decrypt($appId, $sessionKey, $param['encrypted_data'], $param['iv']);
