@@ -1,5 +1,9 @@
 # Laravel Wechat Auth
 
+## 更新日志
+
+v0.3.0: wxapp/fast_login接口支持模拟登录，便于在开发环境进行测试
+
 ## 小程序登录
 
 ### 使用指引
