@@ -51,9 +51,18 @@ class WechatAuthController extends Controller
             'code' => 'required',
         ]);
         $code = $param['code'];
-        $session = $this->wechatApp->code2Session($code);
-        $appId = data_get($session, 'appid');
-        $openid = data_get($session, 'openid');
+
+        $codeForTest = config('wechat-auth.test_code');
+        $debug = config('app.debug', false);
+        if($debug && $codeForTest === $code) {
+            $appId = config('wechat-auth.wxapp_app_id') ?: 'app_id_not_set';
+            $openid = $code;
+        } else {
+            $session = $this->wechatApp->code2Session($code);
+            $appId = data_get($session, 'appid');
+            $openid = data_get($session, 'openid');
+        }
+        
         /** @var WxUser $user */
         $user = WxUser::findByAppOpenid($appId, $openid);
         if (!$user) {

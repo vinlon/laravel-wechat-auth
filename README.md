@@ -15,7 +15,7 @@
     先执行如下命令
     
     ```shell script
-    php artisan vendor:publish --provider="Vinlon\Laravel\SqlLogger\SqlLoggerProvider"
+    php artisan vendor:publish --provider="Vinlon\Laravel\WechatAuth\WechatAuthServiceProvider"
     ```
     
     在应用程序的config目录下，将生成wechat-auth.php文件（注：一般情况下，此文件不需要做任何修改，配置的调整通过环境变量实现）
@@ -26,7 +26,7 @@
     
     ```
     WECHAT_AUTH_WXAPP_APP_ID=
-    WECHAT_AUTH__WXAPP_APP_SECRET=
+    WECHAT_AUTH_WXAPP_APP_SECRET=
     ```
 
 4. 创建数据库表
@@ -61,9 +61,9 @@
 
 快速登录，小程序端不需要进行授权, 但对于新用户来说，用户表中只会记录openid, 如果需要用户昵称、头像等，需要调用 profile 接口提交用户信息 
 
-接口地址: wxapp/fast_login
-请求方式：POST
-INPUT:
+接口地址: wxapp/fast_login  
+请求方式：POST  
+INPUT:  
 
 | 参数 | 说明                             |
 | ---- | -------------------------------- |
