@@ -2,6 +2,7 @@
 
 ## 更新日志
 
+v0.4.0: 升级到laravel8.0, 增加手机号绑定接口
 v0.3.0: wxapp/fast_login接口支持模拟登录，便于在开发环境进行测试
 
 ## 小程序登录
@@ -47,7 +48,7 @@ v0.3.0: wxapp/fast_login接口支持模拟登录，便于在开发环境进行�
    php artisan jwt:secret
    ```
 
-6. 根据实际情况调用 fast_login , fresh_login 或 profile 进行登录
+6. 根据实际需要调用对应的接口
 
     详见[接口说明](#接口说明)
 
@@ -102,11 +103,11 @@ OUTPUT:
 }
 ```
 
-#### fresh_login
+#### mobile
 
-对于新用户，此接口会在创建用户的同时完善用户信息，但对于老用户，仍然需要每次登录时进行授权，无法完成静默登录。
+此接口需要在fast_login登录成功的情况下调用，保存用户微信绑定的手机号
 
-接口地址：wxapp/fresh_login
+接口地址：wxapp/mobile
 
 请求方式： POST
 
@@ -116,7 +117,7 @@ OUTPUT:
 | encrypted_data | wx.getUserInfo返回的数据，包括敏感数据在内的完整用户信息的加密数据 |
 | iv             | wx.getUserInfo返回的数据，加密算法的初始向量                 |
 
-OUTPUT: 返回结果与fast_login相同，不存在user_info为空的情况
+OUTPUT: []
 
 #### wxapp/profile
 

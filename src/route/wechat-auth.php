@@ -14,5 +14,7 @@ Route::prefix('wxapp')->namespace('Vinlon\Laravel\WechatAuth')->group(function (
         Route::get('profile', 'WechatAuthController@getProfile');
         // 更新用户信息
         Route::post('profile', 'WechatAuthController@updateProfile');
+        // 绑定手机号
+        Route::post('mobile', 'WechatAuthController@bindMobile');
     });
 });

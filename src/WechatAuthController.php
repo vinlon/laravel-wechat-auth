@@ -113,6 +113,31 @@ class WechatAuthController extends Controller
         return $this->processLogin($user);
     }
 
+
+
+    /**
+     * 绑定手机号
+     */
+    public function bindMobile()
+    {
+        $param = request()->validate([
+            'code' => 'required',
+            'encrypted_data' => 'required',
+            'iv' => 'required'
+        ]);
+
+        $session = $this->wechatApp->code2Session($param['code']);
+        $appId = data_get($session, 'appid');
+        $openid = data_get($session, 'openid');
+        $sessionKey = data_get($session, 'session_key');
+        $mobileInfo = WxDataDecrypt::decrypt($appId, $sessionKey, $param['encrypted_data'], $param['iv']);
+        $user = WxUser::findByAppOpenid($appId, $openid);
+        $user->mobile = data_get($mobileInfo, 'purePhoneNumber');
+        $user->save();
+
+        return [];
+    }
+
     /**
      * 获取用户信息
      * @return array
