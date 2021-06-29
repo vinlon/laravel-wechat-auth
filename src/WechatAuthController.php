@@ -81,39 +81,6 @@ class WechatAuthController extends Controller
         return $this->processLogin($user);
     }
 
-    /**
-     * 小程序端先调用 wx.login 获取 code, 然后调用 wx.getUserInfo 获取到用户信息, 再调用此接口，每次都需要用户进行授权
-     * 对于新用户而言，会登录并记录完整的用户信息
-     * 对于老用户而言，会登录并更新用户信息
-     * @throws WechatAuthException
-     */
-    public function freshLogin()
-    {
-        $param = request()->validate([
-            'code' => 'required',
-            'encrypted_data' => 'required',
-            'iv' => 'required'
-        ]);
-        $session = $this->wechatApp->code2Session($param['code']);
-        $appId = data_get($session, 'appid');
-        $sessionKey = data_get($session, 'session_key');
-        $userInfo = WxDataDecrypt::decrypt($appId, $sessionKey, $param['encrypted_data'], $param['iv']);
-        $openid = $userInfo['openId'];
-        $user = WxUser::findByAppOpenid($appId, $openid);
-        if (!$user) {
-            $user = new WxUser();
-            $user->app_id = $appId;
-            $user->openid = $openid;
-        }
-        //更新用户信息
-        $this->saveWxUser($user, $userInfo);
-        UserAdded::dispatch($user);
-
-        //登录
-        return $this->processLogin($user);
-    }
-
-
 
     /**
      * 绑定手机号
