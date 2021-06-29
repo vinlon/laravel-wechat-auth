@@ -32,6 +32,7 @@ v0.3.0: wxapp/fast_login接口支持模拟登录，便于在开发环境进行�
     ```
     WECHAT_AUTH_WXAPP_APP_ID=
     WECHAT_AUTH_WXAPP_APP_SECRET=
+    WECHAT_AUTH_TEST_CODE=
     ```
 
 4. 创建数据库表
