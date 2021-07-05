@@ -16,6 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $app_id 微信公众号appid
  * @property string $openid 用户openid
  * @property string $nickname 用户昵称
+ * @property string $mobile 用户手机号
  * @property int $gender 性别，0:未知，1:男，2:女
  * @property string $country 所在国家
  * @property string $province 所在省份

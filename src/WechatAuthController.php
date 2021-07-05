@@ -120,7 +120,8 @@ class WechatAuthController extends Controller
             'province' => $user->province,
             'city' => $user->city,
             'gender' => $user->gender,
-            'avatarUrl' => $user->avatar_url
+            'avatarUrl' => $user->avatar_url,
+            'mobile' => $user->mobile,
         ];
     }
 
@@ -199,6 +200,7 @@ class WechatAuthController extends Controller
                 'city' => $user->city ?? '',
                 'province' => $user->province ?? '',
                 'avatarUrl' => $user->avatar_url ?? '',
+                'mobile' => $user->mobile ?? '',
             ];
         }
         return $result;
