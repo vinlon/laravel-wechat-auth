@@ -7,6 +7,7 @@ namespace Vinlon\Laravel\WechatAuth;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Validation\UnauthorizedException;
 use Tymon\JWTAuth\JWTGuard;
 use Vinlon\Laravel\WechatAuth\Events\UserAdded;
@@ -52,9 +53,9 @@ class WechatAuthController extends Controller
         ]);
         $code = $param['code'];
 
-        $codeForTest = config('wechat-auth.test_code');
+        $testCodePrefix = config('wechat-auth.test_code_prefix');
         $debug = config('app.debug', false);
-        if($debug && $codeForTest === $code) {
+        if($debug && Str::startsWith($code, $testCodePrefix)) {
             $appId = config('wechat-auth.wxapp_app_id') ?: 'app_id_not_set';
             $openid = $code;
         } else {

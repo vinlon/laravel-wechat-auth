@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('wxapp')
     ->middleware([\Vinlon\Laravel\WechatAuth\AcceptJson::class])
+    ->middleware(config('wechat-auth.middleware'))
     ->namespace('Vinlon\Laravel\WechatAuth')->group(function () {
         // 快速登录
         Route::post('fast_login', 'WechatAuthController@fastLogin');
