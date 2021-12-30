@@ -22,6 +22,7 @@ class CreateWxUser extends Migration
             $table->timestamps();
             $table->string('app_id', 32)->comment('微信公众号appid');
             $table->string('openid', 64)->comment('用户openid');
+            $table->string('unionid', 64)->default('')->comment('unionid, 当前小程序绑定到微信开放平台后返回');
             $table->string('nickname', 32)->default('')->comment('用户昵称');
             $table->tinyInteger('gender')->default(0)->comment('性别，0:未知，1:男，2:女');
             $table->string('country', 64)->default('')->comment('所在国家');

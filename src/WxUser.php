@@ -15,6 +15,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $app_id 微信公众号appid
  * @property string $openid 用户openid
+ * @property string $unionid 用户unionid
  * @property string $nickname 用户昵称
  * @property string $mobile 用户手机号
  * @property int $gender 性别，0:未知，1:男，2:女

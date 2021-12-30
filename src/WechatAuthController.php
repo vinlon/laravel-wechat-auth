@@ -55,15 +55,17 @@ class WechatAuthController extends Controller
 
         $testCodePrefix = config('wechat-auth.test_code_prefix');
         $debug = config('app.debug', false);
-        if($debug && Str::startsWith($code, $testCodePrefix)) {
+        if ($debug && Str::startsWith($code, $testCodePrefix)) {
             $appId = config('wechat-auth.wxapp_app_id') ?: 'app_id_not_set';
             $openid = $code;
+            $unionId = '';
         } else {
             $session = $this->wechatApp->code2Session($code);
             $appId = data_get($session, 'appid');
             $openid = data_get($session, 'openid');
+            $unionId = data_get($session, 'unionid', '');
         }
-        
+
         /** @var WxUser $user */
         $user = WxUser::findByAppOpenid($appId, $openid);
         if (!$user) {
@@ -71,12 +73,10 @@ class WechatAuthController extends Controller
             $user = new WxUser();
             $user->app_id = $appId;
             $user->openid = $openid;
+            $user->unionid = $unionId;
             $this->saveWxUser($user);
         } else {
-            //检查用户状态
-            if ($user->status->isNot(WxUserStatus::ENABLED())) {
-                throw new AuthenticationException();
-            }
+            $user->unionid = $unionId;
         }
         //登录
         return $this->processLogin($user);
